@@ -18,16 +18,22 @@
                       <th>ID</th>
                       <th>Name</th>
                       <th>Email</th>
+                      <th>Bio</th>
                       <th>Type</th>
+                      <th>Picture</th>
+                      <th>Creation date</th>
                       <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>me@me.com</td>
-                      <td><span class="tag tag-success">Approved</span></td>
+                    <tr v-for="user in users" :key="user.id">
+                      <td>{{user.id}}</td>
+                      <td>{{user.name}}</td>
+                      <td>{{user.email}}</td>
+                      <td>{{user.bio}}</td>
+                      <td>{{user.type | upText}}</td>
+                      <td>{{user.photo}}</td>
+                      <td>{{user.created_at | myDate}}</td>
                       <td>
                           <a href="#"> <i class="fa fa-edit" title="edit"></i>
                           </a> |
@@ -83,7 +89,7 @@
                             <select v-model="form.type" type="text" name="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                                 <option value="">Select User Role</option>
                                 <option value="admin">Admin</option>
-                                <option value="user">user</option>
+                                <option value="user">User</option>
                                 <option value="author">Author</option>
                             </select>
                             <has-error :form="form" field="type"></has-error>
@@ -96,9 +102,10 @@
                             <has-error :form="form" field="password"></has-error>
                           </div>
                       </div>
+                      <!-- Buttons -->
                       <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Create</button>
+                          <button type="submit" class="btn btn-primary">Create</button>
                       </div>
                   </form>
               </div>
@@ -112,6 +119,7 @@
     export default {
         data(){
             return{
+                users : {},
                 form: new Form({
                     name: '',
                     email: '',
@@ -124,12 +132,28 @@
             }
         },
         methods: {
+
+            loadUsers(){
+                axios.get("api/user").then(({ data }) => (this.users = data.data));
+            },
             createUser(){
+                this.$Progress.start();
                 this.form.post('api/user');
+
+                $('#addNew').modal('hide');
+
+                Toast.fire({
+                  icon: 'success',
+                  title: 'User created successfully'
+                })
+                this.$Progress.finish();
           }
         },
-        mounted() {
-            console.log('Component mounted.')
+        created(){
+          this.loadUsers();
         }
+        // mounted() {
+        //     console.log('Component mounted.')
+        
     }
 </script>
