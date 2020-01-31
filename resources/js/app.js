@@ -42,14 +42,15 @@ Vue.use(VueProgressBar, {
   failedColor: 'red',
   height: '5px',
   transition: {
-    speed: '0.4s',
+    speed: '0.2s',
     opacity: '0.6s',
-    termination: 300
+    termination: 500
   },
 })
 
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/developer', component: require('./components/Developer.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default },
   ]
@@ -67,6 +68,10 @@ Vue.filter('upText', function(text){
 Vue.filter('myDate', function(dated){
     return moment(dated).format("MMM Do YY"); // Jan 21st 20
 });
+
+
+window.Fire = new Vue();
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -75,6 +80,20 @@ Vue.filter('myDate', function(dated){
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+Vue.component(
+  'passport-clients',
+  require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+  'passport-authorized-clients',
+  require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+  'passport-personal-access-tokens',
+  require('./components/passport/PersonalAccessTokens.vue').default
+);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 

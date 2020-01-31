@@ -10,6 +10,15 @@ use Hash;
 
 class UserController extends Controller
 {
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -63,7 +72,20 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // check if the user with the returned ID exists
+        $user = User::findOrFail($id);
+
+        // sanitize the data
+        $this->validate($request, [
+            'name'      =>  'required|string|max:191',
+            'email'     =>  'required|string|email|max:191|unique:users,email,'.$user->id,
+            'password'  =>  'sometimes|min:8',
+        ]);
+
+        // if last request is true, update user details.
+        $user->update($request->all());
+
+        return ['message' => 'User info updated successfully'];
     }
 
     /**
@@ -74,6 +96,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Pass user ID from view to Model 
+        $user = User::findOrFail($id);
+
+        // delete user
+        $user->delete();
+        
+        // If process was successful, send message to view
+        return ['message' => 'User Deleted'];
     }
 }
