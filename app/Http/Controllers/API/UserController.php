@@ -105,4 +105,23 @@ class UserController extends Controller
         // If process was successful, send message to view
         return ['message' => 'User Deleted'];
     }
+
+    // fetch logged in user details to populate profile.
+    public function profile()
+    {
+        return auth('api')->user();
+       
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth('api')->user();
+        if($request->photo){
+            $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+
+            \Image::make($request->photo)->save(public_path('img/profile/').$name);
+        }
+        // return ['message' => "Success"];
+    }
+
 }
