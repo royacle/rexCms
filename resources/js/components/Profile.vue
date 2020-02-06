@@ -15,11 +15,11 @@
                 <div class="card card-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header text-white" style="background-image:url('./img/user-cover.png');">
-                        <h3 class="widget-user-username text-right">Elizabeth Pierce</h3>
-                        <h5 class="widget-user-desc text-right">Web Designer</h5>
+                        <h3 class="widget-user-username">{{ this.form.name }}</h3>
+                        <!-- <h5 class="widget-user-desc">Web Designer</h5> -->
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" src="img/profile.png" alt="User Avatar">
+                        <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -78,19 +78,21 @@
                             <div class="form-group row">
                                 <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
-                                <input type="email" v-model="form.name" class="form-control" id="inputName" placeholder="Name">
+                                    <input type="email" v-model="form.name" class="form-control" id="name" placeholder="Name" :class="{ 'is-invalid': form.errors.has('name') }">
+                                    <has-error :form="form" field="name"></has-error>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                <input type="email" v-model="form.email" class="form-control" id="inputEmail" placeholder="Email">
+                                    <input type="email" v-model="form.email" class="form-control" id="email" placeholder="Email" :class="{ 'is-invalid': form.errors.has('email') }">
+                                    <has-error :form="form" field="email"></has-error>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                                <div class="col-sm-10">
-                                <textarea class="form-control" v-model="form.bio" id="inputExperience" placeholder="Experience"></textarea>
+                                <label for="inputBio" class="col-sm-2 col-form-label">Bio</label>
+                                    <div class="col-sm-10">
+                                    <textarea class="form-control" v-model="form.bio" id="bio" placeholder="Bio" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -100,9 +102,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="passport" class="col-sm-2 col-form-label">Passport</label>
+                                <label for="password" class="col-sm-2 col-form-label">Password</label>
                                 <div class="col-sm-10">
-                                <input type="text" class="form-control" id="passport" placeholder="Passport (Leave empty if not changing)">
+                                <input type="password" v-model="form.password" class="form-control" id="password" placeholder="Password (Leave empty if not changing)" :class="{ 'is-invalid': form.errors.has('password') }">
+                                <has-error :form="form" field="password"></has-error>
                                 </div>
                             </div>
                             
@@ -146,16 +149,23 @@
         },
 
         methods:{
+
+            getProfilePhoto(){
+                return "img/profile/"+this.form.photo;
+            },
             updateInfo(){
-                $this.$Progress.start();
+                this.$Progress.start();
+                if (this.form.password == '') {
+                    this.form.password = undefined;
+                }
                 this.form.put('api/profile')
                 .then(() => {
 
 
-                    $this.$Progress.finish();
+                    this.$Progress.finish();
                 })
                 .catch(() => {
-                    $this.$Progress.fail();
+                    this.$Progress.fail();
                 })
             },
             updateProfile(e){
@@ -175,7 +185,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'You are uploading a large file!'
+                        text: 'You are uploading a file larger than 2MB!'
                     })
                 }
                
