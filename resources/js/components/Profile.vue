@@ -133,6 +133,7 @@
     export default {
         data(){
             return{
+                user : {},
                 form: new Form({
                     id: '',
                     name: '',
@@ -150,8 +151,15 @@
 
         methods:{
 
+            
+            loadUsers(){
+                axios.get("api/profile").then(({ data }) => (this.user = data.data));
+            },
+
             getProfilePhoto(){
-                return "img/profile/"+this.form.photo;
+                let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+this.form.photo ;
+                return photo;
+                
             },
             updateInfo(){
                 this.$Progress.start();
@@ -161,7 +169,7 @@
                 this.form.put('api/profile')
                 .then(() => {
 
-
+                    Fire.$emit('afterUpdated');
                     this.$Progress.finish();
                 })
                 .catch(() => {
@@ -178,6 +186,7 @@
                      reader.onloadend = (file) => {
                     // console.log('RESULT', reader.result)
                     this.form.photo = reader.result;
+                    Fire.$emit('afterUpdated');
                     }
                     reader.readAsDataURL(file);
                 }else{
@@ -190,11 +199,20 @@
                 }
                
             }
+
         },
 
         created()  {
+            this.loadUsers();
+            // update table after insertion of user
+            Fire.$on('afterUpdated',() => {
+                this.loadUsers();
+            });
+            // setInterval(() => this.loadUsers(), 3000);
            axios.get("api/profile")
            .then(({ data }) => (this.form.fill(data)));
+
+           
         }
     }
 </script>

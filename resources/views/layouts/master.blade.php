@@ -74,6 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::user()->name}}</a>
+          <a href="#" class="d-block">{{Auth::user()->type}}</a>
         </div>
       </div>
 
@@ -88,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <p>Dashboard</p>
                   </router-link>
                 </li>
-                
+                @can('isAdmin')
                 <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-tasks"></i>
@@ -97,27 +98,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <i class="right fas fa-angle-left"></i>
                     </p>
                   </a>
-                  <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                      <router-link to="/users" class="nav-link">
-                        <i class="fas fa-users nav-icon"></i>
-                        <p>Users</p>
-                      </router-link>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        <i class="fas fa-circle nav-icon"></i>
-                        <p>Inactive Page</p>
-                      </a>
-                    </li>
-                  </ul>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <router-link to="/users" class="nav-link">
+                          <i class="fas fa-users nav-icon"></i>
+                          <p>Users</p>
+                        </router-link>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="fas fa-circle nav-icon"></i>
+                          <p>Inactive Page</p>
+                        </a>
+                      </li>
+                    </ul>
                 </li>
+                
                 <li class="nav-item">
                   <router-link to="/developer" class="nav-link">
                     <i class="nav-icon fas fa-cogs"></i>
                     <p>Developer</p>
                   </router-link>
                 </li>
+                @endcan
                 <li class="nav-item">
                   <router-link to="/profile" class="nav-link">
                     <i class="nav-icon fas fa-user"></i>
@@ -177,9 +180,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 <!-- ./wrapper -->
 
+@auth
+<script>
+  window.user = @json(auth()->user());
+</script>
+@endauth
 <!-- REQUIRED SCRIPTS -->
-
-
 <!-- AdminLTE App -->
 <script src="/js/app.js"></script>
 </body>

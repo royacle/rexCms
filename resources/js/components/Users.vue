@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row mt-4">
           <div class="col-md-12">
-            <div class="card">
+            <div class="card" v-if="$gate.isAdminORAuthor()">
               <div class="card-header">
                 <h3 class="card-title">Users Table</h3>
 
@@ -49,6 +49,9 @@
           </div>
         </div>
 
+        <div v-if="!$gate.isAdminORAuthor()">
+            <not-found></not-found>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewlLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -97,7 +100,7 @@
                           <div class="form-group">
                             <input v-model="form.password" type="password" name="password"
                               placeholder=""
-                              class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
+                              class="form-control" :class="{'is-invalid': form.errors.has('password') }">
                             <has-error :form="form" field="password"></has-error>
                           </div>
                       </div>
@@ -197,7 +200,10 @@
             },
 
             loadUsers(){
-                axios.get("api/user").then(({ data }) => (this.users = data.data));
+                if(this.$gate.isAdminORAuthor()){
+                  axios.get("api/user").then(({ data }) => (this.users = data.data));
+                }
+                
             },
             createUser(){
                 this.$Progress.start();

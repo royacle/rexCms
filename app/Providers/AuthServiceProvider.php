@@ -26,6 +26,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // Here I created and defined user types.
+        Gate::define('isAdmin', function($user){
+            return $user->type === 'admin';
+        });
+        Gate::define('isAuthor', function($user){
+            return $user->type === 'author';
+        });
+        Gate::define('isUser', function($user){
+            return $user->type === 'user';
+        });
+
         // Passport registered
         Passport::routes();
         //

@@ -26,7 +26,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->paginate(10);
+        // $this->authorize('isAdmin');
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
+            return User::latest()->paginate(10);
+        }
+        
     }
 
     /**
@@ -96,6 +100,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
+
         // Pass user ID from view to Model 
         $user = User::findOrFail($id);
 
@@ -116,6 +122,7 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $user = auth('api')->user();
+        $this->authorize('isAdmin');
 
         // sanitize the data
         $this->validate($request, [
