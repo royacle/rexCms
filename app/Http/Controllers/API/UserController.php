@@ -51,7 +51,7 @@ class UserController extends Controller
             'email'  =>  $request['email'],
             'type'  =>  $request['type'],
             'bio'  =>  $request['bio'],
-            'photo'  =>  $request['photo'],
+            // 'photo'  =>  $request['photo'],
             'password'  =>  Hash::make($request['password']),
         ]);
     }
@@ -122,7 +122,7 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $user = auth('api')->user();
-        $this->authorize('isAdmin');
+        // $this->authorize('isAdmin');
 
         // sanitize the data
         $this->validate($request, [
@@ -151,18 +151,18 @@ class UserController extends Controller
         $user->update($request->all());
         return ['message' => "Success"];
     }
-
+    //Search function for user
     public function search(){
         if ($search = \Request::get('q')) {
             $users = User::where(function($query) use ($search){
                 $query->where('name', 'LIKE', "%$search%")
                 ->orWhere('email', 'LIKE', "%$search%")
-                ->orWhere('type', 'LIKE', "%$search%");
+                ->orWhere('type', 'LIKE', "%$search%")
+                ->orWhere('bio', 'LIKE', "%$search%");
             })->paginate(5);
         }else{
             $users = User::latest()->paginate(5);
         }
-
         return $users;
     }
 

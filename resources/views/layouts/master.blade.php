@@ -21,6 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="/css/app.css">
   <!-- Google Font: Source Sans Pro -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
+  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
@@ -60,7 +61,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="" class="brand-link">
       <img src="./img/logo.png" alt="RexCMS Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">RexCMS</span>
@@ -71,7 +72,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="./img/profile.png" class="img-circle elevation-2" alt="User Image">
+          <!-- <img src="./img/profile.png" class="img-circle elevation-2" alt="User Image"> -->
+          <img src="./img/profile/{{Auth::user()->photo}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::user()->name}}</a>
@@ -107,10 +109,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </router-link>
                       </li>
                       <li class="nav-item">
-                        <a href="#" class="nav-link">
-                          <i class="fas fa-circle nav-icon"></i>
-                          <p>Inactive Page</p>
-                        </a>
+                        <router-link to="/posts" class="nav-link">
+                          <i class="fas fa-blog nav-icon"></i>
+                          <p>Posts</p>
+                        </router-link>
+                      </li>
+                      <li class="nav-item">
+                        <router-link to="/categories" class="nav-link">
+                          <i class="fas fa-list nav-icon"></i>
+                          <p>Categories</p>
+                        </router-link>
                       </li>
                     </ul>
                 </li>
@@ -189,5 +197,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 <!-- AdminLTE App -->
 <script src="/js/app.js"></script>
+<!-- <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script> -->
 </body>
 </html>

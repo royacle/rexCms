@@ -12,7 +12,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
+                <table class="table table-hover table-bordered">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -134,7 +134,7 @@
                     password: '',
                     type: '',
                     bio: '',
-                    photo:  ''
+                    photo:  '',
                     
                 })
             }
@@ -187,7 +187,6 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
                   }).then((result) => {
-
                      if (result.value) {
                     // Send req to server for confirmation
                         this.form.delete('api/user/'+id).then(() => {

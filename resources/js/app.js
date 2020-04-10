@@ -57,6 +57,8 @@ let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/developer', component: require('./components/Developer.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
+    { path: '/posts', component: require('./components/Posts.vue').default },
+    { path: '/categories', component: require('./components/Categories.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '*', component: require('./components/Notfound.vue').default },
   ]

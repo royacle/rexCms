@@ -15,8 +15,8 @@
                 <div class="card card-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header text-white" style="background-image:url('./img/user-cover.png');">
-                        <h3 class="widget-user-username">{{ this.form.name }}</h3>
-                        <h5 class="widget-user-desc"><em>User Type: </em> {{this.form.type}}</h5>
+                        <h3 class="widget-user-username"><em>Name : </em>{{ this.form.name }}</h3>
+                        <h5 class="widget-user-desc"><em>User Type : </em> {{this.form.type}}</h5>
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
@@ -146,7 +146,8 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            // console.log('Component mounted.')
+            // console.log(this.form.name)
         },
 
         methods:{
@@ -209,8 +210,8 @@
                 this.loadUsers();
             });
             // setInterval(() => this.loadUsers(), 3000);
-           axios.get("api/profile")
-           .then(({ data }) => (this.form.fill(data)));
+        //    axios.get("api/profile")
+        //    .then(({ data }) => (this.form.fill(data)));
 
            
         }
