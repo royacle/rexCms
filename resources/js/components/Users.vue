@@ -177,7 +177,6 @@
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-
             deleteUser(id){
                 Swal.fire({
                     title: 'Are you sure?',
@@ -198,7 +197,6 @@
                                 'Your file has been deleted.',
                                 'success'
                               )
-
                               Fire.$emit('afterUpdated');
                             // }
                         }).catch(() => {
@@ -207,7 +205,6 @@
                     }
                   })
             },
-
             loadUsers(){
                 if(this.$gate.isAdminORAuthor()){
                   axios.get("api/user").then(({ data }) => (this.users = data));
@@ -221,7 +218,6 @@
                 .then(()=>{
                     Fire.$emit('afterUpdated');
                       $('#addNew').modal('hide');
-
                       Toast.fire({
                         icon: 'success',
                         title: 'User created successfully'
@@ -230,7 +226,6 @@
                 })
                 // if it failed catch and display error
                 .catch(() => {
-
                 });
                 
           }
@@ -243,7 +238,6 @@
                 this.users = data.data;
             })
             .catch(() => {
-
             })
           })
           
