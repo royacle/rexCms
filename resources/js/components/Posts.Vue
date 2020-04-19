@@ -90,7 +90,8 @@
                             <select class="form-control" name="categories_id" style="width: 100%;" v-model="form.category_id" 
                             :class="{ 'is-invalid': form.errors.has('categories_id') }">
                               <option value="">Select Category</option>
-                              <option v-for="(category, c) in categories.data" v-bind:key="c" :value="category.id">{{category.name}}</option>
+                              <!-- <option v-for="(category, c) in categories.data" v-bind:key="c" :value="category.id">{{category.name}}</option> -->
+                              <option v-for="category in categories.data" :value="category.id">{{category.name}}</option>
                             </select>
                             <has-error :form="form" field="categories_id"></has-error>
                           </div>
