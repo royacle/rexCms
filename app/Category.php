@@ -31,6 +31,6 @@ class Category extends Model
 
     //Joins posts table to categories table
     public function post(){
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'users', 'id');
     }
 }

@@ -133,7 +133,7 @@
     export default {
         data(){
             return{
-                user : {},
+                // user : {},
                 form: new Form({
                     id: '',
                     name: '',
@@ -153,9 +153,9 @@
         methods:{
 
             
-            loadUsers(){
-                axios.get("api/profile").then(({ data }) => (this.user = data.data));
-            },
+            // loadUsers(){
+            //     axios.get("api/profile").then(({ data }) => (this.user = data));
+            // },
 
             getProfilePhoto(){
                 let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+this.form.photo ;
@@ -204,14 +204,14 @@
         },
 
         created()  {
-            this.loadUsers();
+            // this.loadUsers();
             // update table after insertion of user
             Fire.$on('afterUpdated',() => {
                 this.loadUsers();
             });
             // setInterval(() => this.loadUsers(), 3000);
-        //    axios.get("api/profile")
-        //    .then(({ data }) => (this.form.fill(data)));
+           axios.get("api/profile")
+           .then(({ data }) => (this.form.fill(data)));
 
            
         }

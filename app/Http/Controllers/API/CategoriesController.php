@@ -18,7 +18,7 @@ class CategoriesController extends Controller
     {
         $this->middleware('auth:api');
         // check if the user with the returned ID exists
-        $user_id = auth('api')->user()->id;
+        // $user_id = auth('api')->user()->id;
     }
     /**
      * Display a listing of the resource.
@@ -29,10 +29,17 @@ class CategoriesController extends Controller
     {
         // $this->authorize('isAdmin');
         if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
-            return Category::with('user')->paginate(5);
+            // return Category::with('user')->paginate(5);
+            return auth()->user()->category()->with('user')->paginate(5);
         }
     }
 
+    public function allCategories(){
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
+            return Category::latest()->get();
+            // return auth()->user()->category()->with('user')->paginate(5);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -46,7 +53,7 @@ class CategoriesController extends Controller
         ]);
         return Category::create([
             'name'  =>  $request['name'],
-            'user_id'  =>  $user_id
+            'user_id'  =>  auth('api')->user()->id
         ]);
     }
 
@@ -108,18 +115,4 @@ class CategoriesController extends Controller
         }
         return $categories;
         }
-
-    // public function search(){
-    //     if($search = \Request::get('q')){
-    //         $categories = Category::latest() 
-    //         ->leftjoin('users', 'users.id', '=', 'categories.users_id') 
-    //         ->select('users.*', 'categories.categories')
-    //         ->where('name', 'like', '%' .$search. '%')
-    //         ->paginate(5);
-    //     }else{
-    //         $categories = Category::latest()->paginate(5);
-    //     }
-
-    //     return $categories;
-    // }
 }

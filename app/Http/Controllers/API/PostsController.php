@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\User;
 use App\Category;
 use App\Post;
@@ -23,14 +24,9 @@ class PostsController extends Controller
     public function index()
     {
         if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
-            return Post::with('category', 'user')->paginate(5);
-            // return Post::with('user', 'categories')->get();
-            // $posts = 'select * from categories c, users u, posts p
-            //           where c.user_id = u.id and
-            //           c.id = p.category_id';
-            // return $posts = Post::latest()->paginate(5);
-            // $posts = Post::with('user','category')->get();
-            // return Post::find(1)->paginate(5);
+            //   $repost = auth()->user()->id;
+            // return $report = Post::with('category', 'user')->paginate(5);
+            return auth()->user()->post()->with('category', 'user')->paginate(5);
         }
     }
 
@@ -47,6 +43,7 @@ class PostsController extends Controller
         $title = $request['title'];
         $separator = '-';
         $slug = str_slug($title, $separator);
+        $slug = Str::lower($slug);
         $status = 1;
 
         $this->validate($request, [
@@ -72,7 +69,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
+            $id = auth()->user->id;
+           
+        }
+        
     }
 
     /**
