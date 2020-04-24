@@ -42,6 +42,4 @@ Route::get('findCategory', 'API\CategoriesController@search');
 
 Route::put('profile', 'API\UserController@updateProfile');
 
-Route::get('allCategories', 'API\CategoriesController@allCategories');
-
 // Route::apiResources(['dashboard' => 'API\DashboardController']);

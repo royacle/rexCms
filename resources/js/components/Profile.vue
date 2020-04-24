@@ -19,7 +19,7 @@
                         <h5 class="widget-user-desc"><em>User Type : </em> {{this.form.type}}</h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
+                        <img class="img-circle" :src="getProfilePhoto" alt="User Avatar">
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -146,21 +146,14 @@
             }
         },
         mounted() {
-            // console.log('Component mounted.')
-            // console.log(this.form.name)
+            console.log('Component mounted.')
         },
 
         methods:{
 
-            
-            // loadUsers(){
-            //     axios.get("api/profile").then(({ data }) => (this.user = data));
-            // },
-
             getProfilePhoto(){
-                let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+this.form.photo ;
-                return photo;
-                
+                let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+this.form.photo;
+                return photo;   
             },
             updateInfo(){
                 this.$Progress.start();
@@ -175,7 +168,7 @@
                 })
                 .catch(() => {
                     this.$Progress.fail();
-                })
+                });
             },
             updateProfile(e){
                 // console.log('uploading');
@@ -183,37 +176,30 @@
                 let file = e.target.files[0];
                 let reader = new FileReader();
                 // check file size
-                if (file['size'] <= 2111775) {
-                     reader.onloadend = (file) => {
-                    // console.log('RESULT', reader.result)
-                    this.form.photo = reader.result;
-                    Fire.$emit('afterUpdated');
-                    }
-                    reader.readAsDataURL(file);
-                }else{
-                    // display error
+                let limit = 1024 * 1024 * 2;
+                if (file['size'] > limit) {
+                     // display error
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: 'You are uploading a file larger than 2MB!'
                     })
-                }
-               
+                        return false;
+                } 
+
+                reader.onloadend = (file) => {
+                    // console.log('RESULT', reader.result)
+                    this.form.photo = reader.result;
+                    Fire.$emit('afterUpdated');
+                    }
+                    reader.readAsDataURL(file);  
             }
 
         },
 
         created()  {
-            // this.loadUsers();
-            // update table after insertion of user
-            Fire.$on('afterUpdated',() => {
-                this.loadUsers();
-            });
-            // setInterval(() => this.loadUsers(), 3000);
            axios.get("api/profile")
            .then(({ data }) => (this.form.fill(data)));
-
-           
         }
     }
 </script>

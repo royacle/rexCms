@@ -11,46 +11,44 @@
                 </div>
               </div>
               <!-- /.card-header -->
-              <div v-if="loadPosts() != ''">
-                <div class="card-body table-responsive p-0">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Post Title</th>
-                        <th>View Post</th>
-                        <th>Creator</th>
-                        <th>Category</th>
-                        <th>Creation date</th>
-                        <th>Update date</th>
-                        <th>Modify</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- <tr v-for="post in posts.data" :key="post.id"> -->
-                      <tr v-for="post in posts.data" :key="post.id">
-                          <td>{{post.id}}</td>
-                          <td>{{post.title}}</td>
-                          <td><router-link v-bind:to=" '/post/'+ post.slug " target="_blank">View your post</router-link></td>
-                          <td>{{post.user.name}}</td>
-                          <td>{{post.category.name}}</td>
-                          <td>{{post.updated_at | myDate}}</td>
-                          <td>{{post.created_at | myDate}}</td>
-                        <td>
-                            <a href="#" @click="editModal(post)"> <i class="fa fa-edit" title="edit"></i>
-                            </a> |
-                            <a href="#" @click="deletepost(post.id)"> <i class="fa fa-trash" title="delete"></i>
-                            </a> 
-                        </td>
-                      </tr>
-                      
-                    </tbody>
-                  </table>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <pagination :data="posts" @pagination-change-page="getResults"></pagination>
-                </div>
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Post Title</th>
+                      <th>View Post</th>
+                      <th>Creator</th>
+                      <th>Category</th>
+                      <th>Creation date</th>
+                      <th>Update date</th>
+                      <th>Modify</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- <tr v-for="post in posts.data" :key="post.id"> -->
+                    <tr v-for="post in posts.data" :key="post.id">
+                        <td>{{post.id}}</td>
+                        <td>{{post.title}}</td>
+                        <td>{{post.slug}}</td>
+                        <td>{{post.user.name}}</td>
+                        <td>{{post.category.name}}</td>
+                        <td>{{post.updated_at | myDate}}</td>
+                        <td>{{post.created_at | myDate}}</td>
+                      <td>
+                          <a href="#" @click="editModal(post)"> <i class="fa fa-edit" title="edit"></i>
+                          </a> |
+                          <a href="#" @click="deletepost(post.id)"> <i class="fa fa-trash" title="delete"></i>
+                          </a> 
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                  <!-- <pagination :data="posts" @pagination-change-page="getResults"></pagination> -->
               </div>
             </div>
             <!-- /.card -->
@@ -89,13 +87,12 @@
                           </div>
                           <div class="form-group">
                             <label>Category</label>
-                            <select class="form-control" name="categories" style="width: 100%;" type="number" v-model="form.category_id" 
-                              :class="{ 'is-invalid': form.errors.has('categories') }">
+                            <select class="form-control" name="categories_id" style="width: 100%;" v-model="form.category_id" 
+                            :class="{ 'is-invalid': form.errors.has('categories_id') }">
                               <option value="">Select Category</option>
-                              <!-- <option v-for="(category, c) in categories.data" v-bind:key="c" :value="category.id">{{category.name}}</option> -->
-                              <option v-for="category in allCategories" :value="category.id">{{category.name}}</option>
+                              <option v-for="(category, c) in categories.data" v-bind:key="c" :value="category.id">{{category.name}}</option>
                             </select>
-                            <has-error :form="form" field="categories"></has-error>
+                            <has-error :form="form" field="categories_id"></has-error>
                           </div>
                           <!-- /.form-group -->
                       </div>
@@ -118,8 +115,7 @@
         data(){
             return{
                 editmode: true,
-                // categories : {},
-                allCategories : {},
+                categories : {},
                 posts : {},
                 form: new Form({
                     id: '',
@@ -201,17 +197,10 @@
                 }
                 
             },
-            // loadCategories(){
-            //     if(this.$gate.isAdminORAuthor()){
-            //       axios.get("api/category").then(({ data }) => (this.categories = data)).catch(error => console.log(error));
-            //     }
-            // },
-
-            loadAllCategories(){
-              if(this.$gate.isAdminORAuthor()){
-                axios.get("api/allCategories").then(({data}) => (this.allCategories = data))
-                .catch(error => console.log(error));
-              }
+            loadCategories(){
+                if(this.$gate.isAdminORAuthor()){
+                  axios.get("api/category").then(({ data }) => (this.categories = data)).catch(error => console.log(error));
+                }
             },
             
             createPost(){
@@ -229,7 +218,6 @@
                 })
                 // if it failed catch and display error
                 .catch(() => {
-                  this.$Progress.fail();
                 });
                 
           }
@@ -255,8 +243,7 @@
         mounted() {
             // console.log('Component mounted.')
             // console.log()
-            // this.loadCategories();
-            this.loadAllCategories();
+            this.loadCategories();
         }
     }
     // $(document).ready(function() {

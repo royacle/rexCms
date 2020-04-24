@@ -12,7 +12,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'body', 'slug', 'status', 'category_id', 'user_id',
+        'title', 'body', 'slug', 'status', 'category_id', 'user_id'
     ];
     
     //Joins categories table to posts table
@@ -24,8 +24,4 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-
-    // public function post(){
-    //     return $this->hasMany(Post::class);
-    // }
 }

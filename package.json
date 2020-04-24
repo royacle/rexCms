@@ -13,7 +13,7 @@
         "axios": "^0.19.2",
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
-        "jquery": "^3.5.0",
+        "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",
         "resolve-url-loader": "^2.3.1",
@@ -24,12 +24,12 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.13.0",
-        "@popperjs/core": "^2.3.3",
+        "@popperjs/core": "^2.2.1",
         "admin-lte": "^3.0.4",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.24.0",
         "select2": "^4.0.13",
-        "sweetalert2": "^9.10.12",
+        "sweetalert2": "^9.10.9",
         "vform": "^1.0.1",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.1.6"
