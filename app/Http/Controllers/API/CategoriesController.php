@@ -44,12 +44,13 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = Auth::id();
         $this->validate($request, [
             'name'      =>  'required|string|max:191',
         ]);
         return Category::create([
             'name'  =>  $request['name'],
-            'user_id'  =>  $this->user_id
+            'user_id'  =>  $user_id
         ]);
     }
 

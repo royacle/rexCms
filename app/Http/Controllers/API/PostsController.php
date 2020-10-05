@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Post;
@@ -13,7 +12,8 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index,blog');
+        $this->middleware('auth:api');
+        // $this->middleware('auth:api')->except('welcome');
         // $this->user_id = auth('api')->user()->id;
         $user_id = Auth::id();
     }
@@ -36,7 +36,8 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
+    {    
+        $user_id = Auth::id();   
         $title = $request['title'];
         $separator = '-';
         $slug = str_slug($title, $separator);
@@ -52,7 +53,7 @@ class PostsController extends Controller
             'category_id'   =>  $request['category_id'],
             'body'          =>  $request['body'],
             'status'        =>  $status,
-            'user_id'       =>  $this->user_id,
+            'user_id'       =>  $user_id,
             'slug'          =>  $slug,
         ]);
     }
@@ -108,12 +109,9 @@ class PostsController extends Controller
         //
     }
 
-    public function blog(){
-        // return Post::with('category', 'user')->paginate(5);
-        // $blog = Post::select('select * from posts');
-        // return view('welcome', ['blog' => $blog]);
-        // return view('blog');
-        return Post::latest()->paginate(5);
-    }
+    // public function blog(){
+    //     return Post::with('category', 'user')->paginate(5);
+        
+    // }
 
 }

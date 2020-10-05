@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Post;
+use App\Category;
 
 class BlogsController extends Controller
 {
@@ -14,7 +16,13 @@ class BlogsController extends Controller
      */
     public function index()
     {
-        return view('blog');
+        // return view('blog');
+        return Post::with('category', 'user')->paginate(5);
+        // $blog = Post::select('select * from posts');
+        // return view('welcome', ['blog' => $blog]);
+        // return view('blog');
+        // return Post::latest()->paginate(5);
+    
     }
 
     /**

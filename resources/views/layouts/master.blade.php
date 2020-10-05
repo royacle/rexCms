@@ -199,7 +199,6 @@
 </script>
 @endauth
 <!-- REQUIRED SCRIPTS -->
-<!-- AdminLTE App -->
 <script src="/js/app.js"></script>
 </body>
 </html>

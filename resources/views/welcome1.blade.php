@@ -6,15 +6,6 @@
 
         <title>RexCms</title>
 
-        <!-- Scripts -->
-        {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-
-        <!-- Fonts -->
-        <!-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> -->
-
-        <!-- Styles -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
@@ -107,15 +98,11 @@
                         </div> -->
                     </div>
                 </div>
-                
-                {{-- <example-component></example-component> --}}
                 <router-view></router-view>
+                <!-- <blog-view></blog-view> -->
+                    
             </div>
-            @auth
-            <script>
-              window.user = @json(auth()->user());
-            </script>
-            @endauth
-    <script src="/js/app.js"></script>
+        
+        
     </body>
 </html>

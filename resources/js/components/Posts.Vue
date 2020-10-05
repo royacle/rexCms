@@ -193,7 +193,7 @@
             },
             loadPosts(){
                 if(this.$gate.isAdminORAuthor()){
-                  axios.get("api/post").then(({ data }) => (this.posts = data));
+                  axios.get("api/post").then(({ data }) => (this.posts = data)).catch(error => console.log(error));
                 }
                 
             },
