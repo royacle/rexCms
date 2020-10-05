@@ -60,7 +60,9 @@ let routes = [
     { path: '/posts', component: require('./components/Posts.vue').default },
     { path: '/categories', component: require('./components/Categories.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default },
+    // { path: '/blog', component: require('./components/Blog.vue').default },
     { path: '*', component: require('./components/Notfound.vue').default },
+    { path: '/', component: require('./components/PublicHome.vue').default },
   ]
 
   const router = new VueRouter({
@@ -111,6 +113,8 @@ Vue.component(
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('front-view', require('./components/frontView.vue').default);
+Vue.component('home-main', require('./components/PublicMaster.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

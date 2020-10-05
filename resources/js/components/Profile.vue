@@ -19,7 +19,7 @@
                         <h5 class="widget-user-desc"><em>User Type : </em> {{this.form.type}}</h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" :src="getProfilePhoto" alt="User Avatar">
+                        <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -104,7 +104,7 @@
                             <div class="form-group row">
                                 <label for="password" class="col-sm-2 col-form-label">Password</label>
                                 <div class="col-sm-10">
-                                <input type="password" v-model="form.password" class="form-control" id="password" placeholder="Password (Leave empty if not changing)" :class="{ 'is-invalid': form.errors.has('password') }">
+                                <input type="password" v-model="form.password" class="form-control" id="password" autocomplete="off" placeholder="Password (Leave empty if not changing)" :class="{ 'is-invalid': form.errors.has('password') }">
                                 <has-error :form="form" field="password"></has-error>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            // console.log('Component mounted.')
         },
 
         methods:{
@@ -171,7 +171,7 @@
                 });
             },
             updateProfile(e){
-                // console.log('uploading');
+                console.log('uploading');
                 
                 let file = e.target.files[0];
                 let reader = new FileReader();
@@ -190,7 +190,7 @@
                 reader.onloadend = (file) => {
                     // console.log('RESULT', reader.result)
                     this.form.photo = reader.result;
-                    Fire.$emit('afterUpdated');
+                    // Fire.$emit('afterUpdated');
                     }
                     reader.readAsDataURL(file);  
             }

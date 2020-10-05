@@ -34,6 +34,8 @@ Route::apiResources(['category' => 'API\CategoriesController']);
 
 Route::apiResources(['post' => 'API\PostsController']);
 
+Route::get('blog', 'API\PostsController@blog');
+
 Route::get('profile', 'API\UserController@profile');
 
 Route::get('findUser', 'API\UserController@search');

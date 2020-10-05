@@ -4,7 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
+// use App\User;
+use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Post;
 
@@ -12,8 +13,9 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
-        
+        $this->middleware('auth:api')->except('index,blog');
+        // $this->user_id = auth('api')->user()->id;
+        $user_id = Auth::id();
     }
     /**
      * Display a listing of the resource.
@@ -24,13 +26,6 @@ class PostsController extends Controller
     {
         if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
             return Post::with('category', 'user')->paginate(5);
-            // return Post::with('user', 'categories')->get();
-            // $posts = 'select * from categories c, users u, posts p
-            //           where c.user_id = u.id and
-            //           c.id = p.category_id';
-            // return $posts = Post::latest()->paginate(5);
-            // $posts = Post::with('user','category')->get();
-            // return Post::find(1)->paginate(5);
         }
     }
 
@@ -41,9 +36,7 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // check if the user with the returned ID exists
-        $user_id = auth('api')->user()->id;
+    {       
         $title = $request['title'];
         $separator = '-';
         $slug = str_slug($title, $separator);
@@ -59,7 +52,7 @@ class PostsController extends Controller
             'category_id'   =>  $request['category_id'],
             'body'          =>  $request['body'],
             'status'        =>  $status,
-            'user_id'       =>  $user_id,
+            'user_id'       =>  $this->user_id,
             'slug'          =>  $slug,
         ]);
     }
@@ -84,7 +77,24 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         // check if the post with the returned ID exists
+        $post = Post::findOrFail($id);
+
+        $title = $request['title'];
+        $separator = '-';
+        $slug = str_slug($title, $separator);
+        
+         // sanitize the data
+         $this->validate($request, [
+            'title'         =>  'required|string|max:191',
+            'body'          =>  'required',
+            'category_id'   =>  'required|integer',
+        ]);
+        
+        // if last request is true, update category details.
+        $post->update($request->all());
+
+        return ['message' => 'Post was succesfully updated.'];
     }
 
     /**
@@ -97,4 +107,13 @@ class PostsController extends Controller
     {
         //
     }
+
+    public function blog(){
+        // return Post::with('category', 'user')->paginate(5);
+        // $blog = Post::select('select * from posts');
+        // return view('welcome', ['blog' => $blog]);
+        // return view('blog');
+        return Post::latest()->paginate(5);
+    }
+
 }

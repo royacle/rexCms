@@ -1,9 +1,11 @@
 
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+<!--================================================================================
+  Item Name: R0yacle's rexCms
+  Version: 1.0
+  Author: R0yacle
+  Author URL: http://royacle.com
+================================================================================ -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -21,7 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="/css/app.css">
   <!-- Google Font: Source Sans Pro -->
   <!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
-  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+  <!-- <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"> -->
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
@@ -72,10 +74,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <!-- <img src="./img/profile.png" class="img-circle elevation-2" alt="User Image"> -->
-          <img src="./img/profile/{{Auth::user()->photo}}" class="img-circle elevation-2" alt="User Image">
-       }
+
+           
           
+          <img src="./img/profile/{{Auth::user()->photo}}" class="img-circle elevation-2" alt="User Image"> 
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::user()->name}}</a>
@@ -199,6 +201,5 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 <!-- AdminLTE App -->
 <script src="/js/app.js"></script>
-<!-- <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script> -->
 </body>
 </html>

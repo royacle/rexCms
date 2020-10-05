@@ -12,8 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('public.index');
 });
+// Route::get('/blog', function () {
+//     return view('public.blog');
+// });
+// Route::get('/blog', 'API\PostsController@blog')->name('blog');
+// Route::get('/blog', 'API\PostsController@blog');
+// Route::resource('posts', 'PostsController');
 
 Auth::routes();
 

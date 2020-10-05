@@ -5,7 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
-use App\User;
+// use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriesController extends Controller
 {
@@ -18,7 +19,8 @@ class CategoriesController extends Controller
     {
         $this->middleware('auth:api');
         // check if the user with the returned ID exists
-        $user_id = auth('api')->user()->id;
+        // $this->user_id = auth('api')->user()->id;
+        $user_id = Auth::id();
     }
     /**
      * Display a listing of the resource.
@@ -29,7 +31,8 @@ class CategoriesController extends Controller
     {
         // $this->authorize('isAdmin');
         if(\Gate::allows('isAdmin') || \Gate::allows('isAuthor')){
-            return Category::with('user')->paginate(5);
+            // return Category::with('user')->paginate(5);
+            return auth()->user()->category()->with('user')->paginate(5);
         }
     }
 
@@ -46,7 +49,7 @@ class CategoriesController extends Controller
         ]);
         return Category::create([
             'name'  =>  $request['name'],
-            'user_id'  =>  $user_id
+            'user_id'  =>  $this->user_id
         ]);
     }
 

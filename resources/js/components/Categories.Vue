@@ -96,8 +96,6 @@
                     id: '',
                     name: '',
                     user_id: '',
-                    
-                    
                 })
             }
         },
@@ -187,6 +185,8 @@
                 })
                 // if it failed catch and display error
                 .catch(() => {
+                  this.$Progress.fail();
+                  Swal("Failed!", "There was something wrong.", "warning");
                 });
                 
           }

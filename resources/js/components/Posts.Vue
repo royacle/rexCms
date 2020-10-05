@@ -48,7 +48,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                  <!-- <pagination :data="posts" @pagination-change-page="getResults"></pagination> -->
+                  <pagination :data="posts" @pagination-change-page="getResults"></pagination>
               </div>
             </div>
             <!-- /.card -->
@@ -139,7 +139,7 @@
                 .then(() => {
                   // success
                   // Close modal
-                   $('#addNewCat').modal('hide');
+                   $('#addNewPost').modal('hide');
                   //  show success alert
                   Swal.fire(
                     'Updated',
