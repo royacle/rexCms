@@ -222,6 +222,7 @@
                 })
                 // if it failed catch and display error
                 .catch(() => {
+                  this.$Progress.fail();
                 });
                 
           }
