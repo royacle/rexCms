@@ -87,12 +87,12 @@
                           </div>
                           <div class="form-group">
                             <label>Category</label>
-                            <select class="form-control" name="categories_id" style="width: 100%;" v-model="form.category_id" 
-                            :class="{ 'is-invalid': form.errors.has('categories_id') }">
+                            <select class="form-control" name="categor_id" style="width: 100%;" v-model="form.category_id" 
+                            :class="{ 'is-invalid': form.errors.has('category_id') }">
                               <option value="">Select Category</option>
                               <option v-for="(category, c) in categories.data" v-bind:key="c" :value="category.id">{{category.name}}</option>
                             </select>
-                            <has-error :form="form" field="categories_id"></has-error>
+                            <has-error :form="form" field="category_id"></has-error>
                           </div>
                           <!-- /.form-group -->
                       </div>
@@ -193,13 +193,17 @@
             },
             loadPosts(){
                 if(this.$gate.isAdminORAuthor()){
-                  axios.get("api/post").then(({ data }) => (this.posts = data)).catch(error => console.log(error));
+                  axios.get("api/post")
+                  .then(({ data }) => (this.posts = data))
+                  .catch(error => console.log(error));
                 }
                 
             },
             loadCategories(){
                 if(this.$gate.isAdminORAuthor()){
-                  axios.get("api/category").then(({ data }) => (this.categories = data)).catch(error => console.log(error));
+                  axios.get("api/category")
+                  .then(({ data }) => (this.categories = data))
+                  .catch(error => console.log(error));
                 }
             },
             
